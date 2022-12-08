@@ -28,11 +28,10 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        Time.timeScale = 1f;
+        Time.timeScale = 0;
         hasGameStarted = false;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         startButton.SetActive(true);
@@ -55,9 +54,14 @@ public class GameManager : MonoBehaviour
 
     public void SpawnBlock()
     {
-        GameObject tempBlock = Instantiate(blockPrefab);
+        //GameObject tempBlock = Instantiate(blockPrefab);
+        //startPos += offset;
+        //tempBlock.transform.position = startPos;
+
+        GameObject step = ObjectPooling.objectPoolingInstance.TakeStairFromPool();
         startPos += offset;
-        tempBlock.transform.position = startPos;
+        step.transform.position = startPos;
+        step.SetActive(true);
     }
 
     public void UpdateDiamond()
@@ -96,6 +100,7 @@ public class GameManager : MonoBehaviour
     public void GameStart()
     {
         startButton.SetActive(false);
+        Time.timeScale = 1;
         player.GetComponent<Player>().hasGameStarted = true;
         hasGameStarted = true;
     }

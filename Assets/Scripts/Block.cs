@@ -11,7 +11,7 @@ public class Block : MonoBehaviour
     [SerializeField]
     private GameObject spikePrefab, discPrefab, diamondPrefab;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         if (!GameManager.instance.hasGameStarted) return;

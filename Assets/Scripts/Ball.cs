@@ -5,19 +5,19 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
 
-    [SerializeField]
-    private float startSpeed, forceMultiplier;
+    [SerializeField] float startSpeed;
+    [SerializeField] float force;
 
-    private float acceleration, speed;
+    float acceleration, speed;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         speed = startSpeed;
-        acceleration = -startSpeed * forceMultiplier;
+        acceleration = -startSpeed * force;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         if (transform.localPosition.y < -1f)
@@ -35,10 +35,12 @@ public class Ball : MonoBehaviour
     {
         speed = startSpeed;
         GameManager.instance.SpawnBlock();
+
         if (!GameManager.instance.hasGameStarted) return;
-        if(collision.gameObject.CompareTag("Block"))
+        if(collision.gameObject.CompareTag("Step"))
         {
-            Destroy(collision.gameObject, 5f);
+            //Destroy(collision.gameObject, 5f);
+            ObjectPooling.objectPoolingInstance.ReturnStairToPool(collision.gameObject);
             GameManager.instance.UpdateScore();
         }
         else if(collision.gameObject.CompareTag("Combo"))
@@ -60,5 +62,4 @@ public class Ball : MonoBehaviour
             GameManager.instance.GameOver();
         }
     }
-
 }
